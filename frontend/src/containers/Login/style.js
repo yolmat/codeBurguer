@@ -44,6 +44,11 @@ export const H1 = styled.h1`
   margin: 5vmax 0 0.5vmax 0;
 `
 
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`
+
 export const Label = styled.p`
   font-style: normal;
   font-weight: 500;
