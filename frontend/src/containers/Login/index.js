@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 
 import LoginImage from '../../assets/loginimg.svg'
 import LogoImage from '../../assets/logo.svg'
+import api from '../../services/api'
 import {
   Container,
   LoginImg,
@@ -38,7 +39,14 @@ function Login() {
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = data => console.log(data)
+  const onSubmit = async clientData => {
+    const response = await api.post('sessions', {
+      email: clientData.email,
+      password: clientData.password
+    })
+
+    console.log(response)
+  }
 
   return (
     <Container>
