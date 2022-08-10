@@ -59,13 +59,23 @@ export const Label = styled.p`
 `
 
 export const Input = styled.input`
-  border: none;
+  border: ${props => (props.error ? '2px solid #cc1717;' : 'none')};
   background: #ffffff;
   box-shadow: 3px 3px 10px rgba(74, 144, 226, 0.19);
   border-radius: 5px;
   padding-left: 5px;
   height: 2vmax;
+`
+
+export const ErrorMessage = styled.p`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.8vmax;
+  line-height: 21px;
+
   margin-bottom: 1vmax;
+
+  color: #cc1717;
 `
 
 export const Button = styled.button`
