@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 import LoginImage from '../../assets/loginimg.svg'
 import LogoImage from '../../assets/logo.svg'
 import Button from '../../components/Button'
+import { useUser } from '../../hooks/UserContext'
 import api from '../../services/api'
 import {
   Container,
@@ -23,6 +24,8 @@ import {
 } from './style'
 
 function Login() {
+  const user = useUser()
+  console.log(user)
   const schema = Yup.object().shape({
     email: Yup.string()
       .email('Digite um email valido')
