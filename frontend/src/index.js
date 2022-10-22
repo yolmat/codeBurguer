@@ -9,11 +9,11 @@ import GlobalStyles from './styles/GlobalStyles'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <>
-    <UserProvider>
-      <Login /> <GlobalStyles /> <ToastContainer />
-    </UserProvider>
-  </>
+    <>
+        <UserProvider>
+            <Login /> <GlobalStyles /> <ToastContainer />
+        </UserProvider>
+    </>
 )
 
 root()

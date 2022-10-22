@@ -5,28 +5,28 @@ import PropTypes from 'prop-types'
 const UserContext = createContext({})
 
 export const UserProvider = ({ children }) => {
-  const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState({})
 
-  const putUserData = userInfo => {
-    setUserData(userInfo)
-  }
+    const putUserData = userInfo => {
+        setUserData(userInfo)
+    }
 
-  return (
-    <UserContext.Provider value={{ putUserData, userData }}>
-      {children}
-    </UserContext.Provider>
-  )
+    return (
+        <UserContext.Provider value={{ putUserData, userData }}>
+            {children}
+        </UserContext.Provider>
+    )
 }
 
 export const useUser = () => {
-  const context = useContext(UserContext)
+    const context = useContext(UserContext)
 
-  if (!context) {
-    throw new Error('userUser must be used with UserContext')
-  }
-  return context
+    if (!context) {
+        throw new Error('userUser must be used with UserContext')
+    }
+    return context
 }
 
 UserProvider.propTypes = {
-  children: PropTypes.node
+    children: PropTypes.node
 }
