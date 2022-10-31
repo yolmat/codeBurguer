@@ -7,8 +7,13 @@ const UserContext = createContext({})
 export const UserProvider = ({ children }) => {
     const [userData, setUserData] = useState({})
 
-    const putUserData = userInfo => {
+    const putUserData = async userInfo => {
         setUserData(userInfo)
+
+        await localStorage.setItem(
+            'Codeburguer:userDate',
+            JSON.stringify(userInfo)
+        )
     }
 
     return (

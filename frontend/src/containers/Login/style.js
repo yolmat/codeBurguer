@@ -13,15 +13,15 @@ export const Container = styled.div`
 `
 
 export const LoginImg = styled.img`
-    height: 50rem;
+    height: 40rem;
 `
 
 export const ContainerItens = styled.div`
     background: #373737;
     box-shadow: 0px 4px 15px rgba(74, 144, 226, 0.24);
     border-radius: 0 10px 10px 0;
-    width: 40rem;
-    height: 50rem;
+    width: 35rem;
+    height: 40rem;
     padding: 0 2rem;
     display: flex;
     align-items: center;
@@ -67,7 +67,7 @@ export const Input = styled.input`
     box-shadow: 3px 3px 10px rgba(74, 144, 226, 0.19);
     border-radius: 5px;
     padding-left: 5px;
-    width: 35rem;
+    width: 30rem;
     height: 2rem;
 `
 
