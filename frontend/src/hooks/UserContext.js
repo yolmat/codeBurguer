@@ -10,10 +10,7 @@ export const UserProvider = ({ children }) => {
     const putUserData = async userInfo => {
         setUserData(userInfo)
 
-        await localStorage.setItem(
-            'Codeburguer:userDate',
-            JSON.stringify(userInfo)
-        )
+        await localStorage.setItem('codeburguer:userDate', userInfo)
     }
 
     return (

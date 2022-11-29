@@ -25,7 +25,7 @@ import {
 
 function Login() {
     const { putUserData, userData } = useUser()
-
+    console.log(userData)
     const schema = Yup.object().shape({
         email: Yup.string()
             .email('Digite um email valido')
@@ -55,6 +55,8 @@ function Login() {
                 error: 'Verifique seu e-mail e senha'
             }
         )
+
+        putUserData(data)
     }
 
     return (
