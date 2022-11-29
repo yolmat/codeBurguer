@@ -24,8 +24,8 @@ import {
 } from './style'
 
 function Login() {
-    const { putUserData, userData } = useUser()
-    console.log(userData)
+    const { putUserData } = useUser()
+
     const schema = Yup.object().shape({
         email: Yup.string()
             .email('Digite um email valido')
