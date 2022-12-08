@@ -12,7 +12,7 @@ import {
     ImgCategory
 } from './style'
 
-function OffersCarrosel() {
+export function OffersCarrosel() {
     const [offers, setOffers] = useState([])
     useEffect(() => {
         async function loadOffers() {
@@ -68,5 +68,3 @@ function OffersCarrosel() {
         </Container>
     )
 }
-
-export default OffersCarrosel

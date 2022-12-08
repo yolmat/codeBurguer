@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 
 import LogoImage from '../../assets/logo.svg'
 import RegisterImage from '../../assets/registerimg.svg'
-import Button from '../../components/Button'
+import { Button } from '../../components'
 import api from '../../services/api'
 import {
     Container,
@@ -23,7 +23,7 @@ import {
     SingInLink
 } from './style'
 
-function Register() {
+export function Register() {
     const schema = Yup.object().shape({
         name: Yup.string('Esse campo e obrigatorio').required(
             'Esse campo e obrigatorio'
@@ -157,5 +157,3 @@ function Register() {
         </Container>
     )
 }
-
-export default Register

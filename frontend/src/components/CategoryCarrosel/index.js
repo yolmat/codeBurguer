@@ -11,7 +11,7 @@ import {
     ImgCategory
 } from './style'
 
-function CategoryCarrosel() {
+export function CategoryCarrosel() {
     const [categories, setCategories] = useState([])
     useEffect(() => {
         async function loadCategories() {
@@ -54,5 +54,3 @@ function CategoryCarrosel() {
         </Container>
     )
 }
-
-export default CategoryCarrosel
