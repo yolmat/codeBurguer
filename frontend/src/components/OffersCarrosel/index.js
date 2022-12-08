@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Carousel from 'react-elastic-carousel'
 
-import category from '../../assets/category.png'
+import offer from '../../assets/offers.png'
 import api from '../../services/api'
 import {
     Container,
@@ -11,16 +11,18 @@ import {
     ImgCategory
 } from './style'
 
-function CategoryCarrosel() {
-    const [categories, setCategories] = useState([])
+function OffersCarrosel() {
+    const [offers, setOffers] = useState([])
     useEffect(() => {
-        async function loadCategories() {
-            const { data } = await api.get('categories')
+        async function loadOffers() {
+            const { data } = await api.get('products')
 
-            setCategories(data)
+            const onlyOffers = data.filter(product => product.offer)
+
+            setOffers(onlyOffers)
         }
 
-        loadCategories()
+        loadOffers()
     }, [])
 
     const breackPoints = [
@@ -33,21 +35,23 @@ function CategoryCarrosel() {
 
     return (
         <Container>
-            <CategoryImg src={category} alt="Logo da categoria" />
+            <CategoryImg src={offer} alt="Logo da oferta" />
 
             <Carousel
                 itemsToShow={5}
                 style={{ width: '95%' }}
                 breakPoints={breackPoints}
             >
-                {categories &&
-                    categories.map(category => (
-                        <ContainerItens key={category.id}>
+                {offers &&
+                    offers.map(products => (
+                        <ContainerItens key={products.id}>
                             <ImgCategory
-                                src={category.url}
-                                alt="Foto da categoria"
+                                src={products.url}
+                                alt="Foto da produto"
                             />
-                            <Button>{category.name}</Button>
+                            <p>{products.name}</p>
+                            <p>{products.price}</p>
+                            <Button>Peça Agora</Button>
                         </ContainerItens>
                     ))}
             </Carousel>
@@ -55,4 +59,4 @@ function CategoryCarrosel() {
     )
 }
 
-export default CategoryCarrosel
+export default OffersCarrosel
