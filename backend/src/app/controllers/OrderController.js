@@ -6,108 +6,108 @@ import Order from '../schemas/Order'
 import User from '../models/User'
 
 class OrderController {
-  async store(request, response) {
-    const schema = Yup.object().shape({
-      products: Yup.array()
-        .required()
-        .of(
-          Yup.object().shape({
-            id: Yup.number().required(),
-            quantity: Yup.number().required(),
-          })
-        ),
-    })
+    async store(request, response) {
+        const schema = Yup.object().shape({
+            products: Yup.array()
+                .required()
+                .of(
+                    Yup.object().shape({
+                        id: Yup.number().required(),
+                        quantity: Yup.number().required(),
+                    })
+                ),
+        })
 
-    try {
-      await schema.validateSync(request.body, { abortEarly: false })
-    } catch (err) {
-      return response.status(400).json({ error: err.errors })
+        try {
+            await schema.validateSync(request.body, { abortEarly: false })
+        } catch (err) {
+            return response.status(400).json({ error: err.errors })
+        }
+
+        const productsId = request.body.products.map((product) => product.id)
+
+        const updateProducts = await Product.findAll({
+            where: {
+                id: productsId,
+            },
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['name'],
+                },
+            ],
+        })
+
+        const editedProducts = updateProducts.map((product) => {
+            const productIndex = request.body.products.findIndex(
+                (requestProducts) => requestProducts.id === product.id
+            )
+
+            const newProduct = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                category: product.category.name,
+                url: product.url,
+                quantity: request.body.products[productIndex].quantity,
+            }
+
+            return newProduct
+        })
+
+        const order = {
+            user: {
+                id: request.userId,
+                name: request.userName,
+            },
+            products: editedProducts,
+            status: 'Pedido realizado',
+        }
+
+        const orderResponse = await Order.create(order)
+
+        return response.status(201).json(orderResponse)
     }
 
-    const productsId = request.body.products.map((product) => product.id)
+    async index(request, response) {
+        const orders = await Order.find()
 
-    const updateProducts = await Product.findAll({
-      where: {
-        id: productsId,
-      },
-      include: [
-        {
-          model: Category,
-          as: 'category',
-          attributes: ['name'],
-        },
-      ],
-    })
-
-    const editedProducts = updateProducts.map((product) => {
-      const productIndex = request.body.products.findIndex(
-        (requestProducts) => requestProducts.id === product.id
-      )
-
-      const newProduct = {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        category: product.category.name,
-        url: product.url,
-        quantity: request.body.products[productIndex].quantity,
-      }
-
-      return newProduct
-    })
-
-    const order = {
-      user: {
-        id: request.userId,
-        name: request.userName,
-      },
-      products: editedProducts,
-      status: 'Pedido realizado',
+        return response.json(orders)
     }
 
-    const orderResponse = await Order.create(order)
+    async update(request, response) {
+        const schema = Yup.object().shape({
+            status: Yup.string().required(),
+        })
 
-    return response.status(201).json(orderResponse)
-  }
+        try {
+            await schema.validateSync(request.body, { abortEarly: false })
+        } catch (err) {
+            return response.status(400).json({ error: err.errors })
+        }
 
-  async index(request, response) {
-    const orders = await Order.find()
+        const { admin: isAdmin } = await User.findByPk(request.userId)
 
-    return response.json(orders)
-  }
+        if (!isAdmin) {
+            return response.status(401).json({
+                message: 'you do not have permission to access this area',
+            })
+        }
 
-  async update(request, response) {
-    const schema = Yup.object().shape({
-      status: Yup.string().required(),
-    })
+        const { id } = request.params
+        const { status } = request.body
 
-    try {
-      await schema.validateSync(request.body, { abortEarly: false })
-    } catch (err) {
-      return response.status(400).json({ error: err.errors })
+        try {
+            await Order.updateOne({ _id: id }, { status })
+        } catch (error) {
+            return response.status(400).json({ error: error.message })
+        }
+
+        console.log(status)
+
+        return response.json({ message: 'Status was updated' })
     }
-
-    const { admin: isAdmin } = await User.findByPk(request.userId)
-
-    if (!isAdmin) {
-      return response
-        .status(401)
-        .json({ message: 'you do not have permission to access this area' })
-    }
-
-    const { id } = request.params
-    const { status } = request.body
-
-    try {
-      await Order.updateOne({ _id: id }, { status })
-    } catch (error) {
-      return response.status(400).json({ error: error.message })
-    }
-
-    console.log(status)
-
-    return response.json({ message: 'Status was updated' })
-  }
 }
 
 export default new OrderController()

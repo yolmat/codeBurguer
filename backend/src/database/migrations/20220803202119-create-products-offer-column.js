@@ -1,15 +1,15 @@
 'use strict'
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    return await queryInterface.addColumn('products', 'offer', {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false,
-      allowNull: false,
-    })
-  },
+    up: async (queryInterface, Sequelize) => {
+        return await queryInterface.addColumn('products', 'offer', {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+            allowNull: false,
+        })
+    },
 
-  down: async (queryInterface, Sequelize) => {
-    return await queryInterface.removeColumn('products', 'offer')
-  },
+    down: async (queryInterface, Sequelize) => {
+        return await queryInterface.removeColumn('products', 'offer')
+    },
 }

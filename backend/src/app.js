@@ -1,34 +1,37 @@
 import express from 'express'
 import routes from './routes'
 import { resolve } from 'path'
+import cors from 'cors'
 
 import './database'
 class App {
-  constructor() {
-    this.app = express()
+    constructor() {
+        this.app = express()
 
-    this.middlewares()
+        this.app.use(cors())
 
-    this.routes()
-  }
+        this.middlewares()
 
-  middlewares() {
-    this.app.use(express.json())
+        this.routes()
+    }
 
-    this.app.use(
-      '/product-file',
-      express.static(resolve(__dirname, '..', 'uploads'))
-    )
+    middlewares() {
+        this.app.use(express.json())
 
-    this.app.use(
-      '/category-file',
-      express.static(resolve(__dirname, '..', 'uploads'))
-    )
-  }
+        this.app.use(
+            '/product-file',
+            express.static(resolve(__dirname, '..', 'uploads'))
+        )
 
-  routes() {
-    this.app.use(routes)
-  }
+        this.app.use(
+            '/category-file',
+            express.static(resolve(__dirname, '..', 'uploads'))
+        )
+    }
+
+    routes() {
+        this.app.use(routes)
+    }
 }
 
 export default new App().app
