@@ -33,6 +33,20 @@ export const Body = styled.div`
         font-size: 16px;
         color: #000000;
     }
+
+    .quantityContainer {
+        display: flex;
+        gap: 20px;
+        align-items: baseline;
+
+        button {
+            height: 30px;
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    }
 `
 
 export const EmptyCart = styled.p`
